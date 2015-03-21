@@ -47,7 +47,8 @@ df <- data.table(rbind(test,train))
 #4. (b) Appropriately label the data set with descriptive variable names (Part II)
 #   replace occurrences of '...' with '.' in column names.
 xlabels <- gsub(pattern = "\\.\\.", replacement = "", x = names(df))
-xlabels <- gsub(pattern = "Acc", replacement = "Acceleration", x = xlabels)
+#xlabels <- gsub(pattern = "Acc", replacement = "Accelerometer", x = xlabels) #didn't do this replacement because it isn't clear from features_info.txt where Acc=Acceleration vs Acc=Accelerometer!
+xlabels <- gsub(pattern = "Gyro", replacement = "Gyroscope", x = xlabels)
 xlabels <- gsub(pattern = "Freq", replacement = "Frequency", x = xlabels)
 xlabels <- gsub(pattern = "BodyBody", replacement = "Body", x = xlabels)
 setnames(df,names(df),xlabels)
@@ -56,12 +57,13 @@ setnames(df,names(df),xlabels)
 #   with the average of each variable for each activity and each subject
 df$subject <- factor(df$subject)
 df2<- ddply(df,.(activity,subject), function(x) colMeans(x[, -c(column,column+1)]))
+#removed below due to warning message
 #df2 <- aggregate(df,by=list(activity=df$activity, subject=df$subject), mean)
 #df2["activity"] <- NULL
 #df2["subject"] <- NULL
 
 #Upload data set as a txt file created with write.table() using row.name=FALSE
-write.table(df2,file="dfmeans.txt",row.names=FALSE)  
+write.table(df2,file="dfmeans.txt",row.names=FALSE)
 
 total.rows <-  (max(s.test,s.train) - min(s.test,s.train) + 1) * (nrow(activities)) # there should be 30 x 6 = 180 rows.
 if (nrow(df2) != total.rows) {

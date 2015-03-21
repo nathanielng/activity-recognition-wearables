@@ -20,6 +20,15 @@ activity type and the second column contains the subject who performed the
 particular activity. The remaining columns contained the data averaged over all
 the values matching the 'subject' and 'activity'.
 
+Column names prefixed with a 't' are **time domain** data while
+names prefixed with a 'f' are **frequency domain** data.
+Names with '.std' contain standard deviation data, while
+names with '.mean' contain averages (i.e. means).
+In terms of units, variables names (as in `features.txt`) are
+normalized and bounded to the range [-1,1].
+'Acc' refers to accelerometer (or acceleration) data
+while 'Gyro' refers to gyroscope data.
+
 ### Data
 
 The source of the data used in this analysis is the [Human Activity Recognition Using Smartphones Data/ Set](http://archive.ics.uci.edu/ml/datasets/Human+Activity+Recognition+Using+Smartphones) | [UCI Machine Learning Repository](http://archive.ics.uci.edu/ml/index.html), downloaded from the location: https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip
@@ -78,6 +87,10 @@ order 0, 4(a), 3, 2, 1, 4(b), 5.
    (b) since R converts dashes and brackets into
    dots for column names, multiple dots ('...') are subsequently
    replaced with a single dot ('.') for further readability.
+   Trailing double dots ('..') are removed.
+   'Freq' is also replaced by 'Frequency' and
+   'BodyBody', which is confusing, is replaced by 'Body'
+   'Gyro' is replaced by 'Gyroscope'
 
 5. **From the data set in step 4, creates a second, independent tidy data set with the average of each variable for each activity and each subject. Upload data set as a txt file created with write.table() using row.name=FALSE**
    The ddply command is used to average the data over each
