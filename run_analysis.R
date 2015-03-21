@@ -47,23 +47,23 @@ df <- data.table(rbind(test,train))
 #4. (b) Appropriately label the data set with descriptive variable names (Part II)
 #   replace occurrences of '...' with '.' in column names.
 xlabels <- gsub(pattern = "\\.\\.", replacement = "", x = names(df))
+xlabels <- gsub(pattern = "Acc", replacement = "Acceleration", x = xlabels)
+xlabels <- gsub(pattern = "Freq", replacement = "Frequency", x = xlabels)
+xlabels <- gsub(pattern = "BodyBody", replacement = "Body", x = xlabels)
 setnames(df,names(df),xlabels)
 
 #5. From the data set in step 4, create a second, independent tidy data set
 #   with the average of each variable for each activity and each subject
 df$subject <- factor(df$subject)
-df2a<- ddply(df,.(activity,subject), function(x) colMeans(x[, -c(column,column+1)]))
+df2<- ddply(df,.(activity,subject), function(x) colMeans(x[, -c(column,column+1)]))
 #df2 <- aggregate(df,by=list(activity=df$activity, subject=df$subject), mean)
 #df2["activity"] <- NULL
 #df2["subject"] <- NULL
 
 #Upload data set as a txt file created with write.table() using row.name=FALSE
+write.table(df2,file="dfmeans.txt",row.names=FALSE)  
 
-no.of.subjects  <- max(s.test,s.train) - min(s.test,s.train) + 1 #there should be 30 subjects
-no.of.activities <- nrow(activities) #there should be 6 activities 
-total.rows <-  no.of.subjects * no.of.activities # there should be 6 x 30 = 180 rows.
-if (nrow(df2a) == total.rows) {
-  write.table(df2a,file="dfmeans.txt",row.names=FALSE)  
-} else {
+total.rows <-  (max(s.test,s.train) - min(s.test,s.train) + 1) * (nrow(activities)) # there should be 30 x 6 = 180 rows.
+if (nrow(df2) != total.rows) {
   print(sprintf("Warning: there is a problem with the data set; there should be %d x %d = %d rows", no.of.subjects, no.of.activities, total.rows))
 }

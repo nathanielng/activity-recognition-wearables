@@ -4,10 +4,15 @@
 
 * `xlabels   ` - loaded from `features.txt`, stores the x column headers
 * `activities` - loaded from
+* `x.test`, `y.test`, `s.test` - measurement, activity, and subject data for the **test** set
+* `x.train`, `y.train`, `s.train` - measurement, activity, and subject data for the **training** set
+* `columns   ` - the columns containing mean or standard deviation data to be subsetted
+* `column    ` - the column number for the activity column
 * `test      ` - the test set (created from x.test, y.test, s.test)
 * `train     ` - the training set (created from x.train, y.train, s.train)
 * `df        ` - the merged data set (created from test and train)
-* `df2a      ` - the aggregated data set (created from df by averaging over activities and subjects)
+* `df2       ` - the aggregated data set (created from df by averaging over activities and subjects)
+* `total.rows` - the total number of rows that df2a should have (30 x 6 = 180)
 
 The final data set, `dfmeans.txt` is created from df2a using `write.table`.
 The first row contains the column headers of which the first column contains the
